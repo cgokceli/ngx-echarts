@@ -1,0 +1,414 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-echarts documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/stripe.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">ngx-echarts documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="ngx-echarts">ngx-echarts</h1>
+<!-- Badges section here. -->
+<p><a href="https://www.npmjs.com/package/ngx-echarts"><img src="https://img.shields.io/npm/v/ngx-echarts.svg" alt="npm" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/ngx-echarts"><img src="https://img.shields.io/npm/dm/ngx-echarts.svg" alt="npm" class="img-responsive"></a>
+<a href="https://travis-ci.org/xieziyu/ngx-echarts"><img src="https://travis-ci.org/xieziyu/ngx-echarts.svg?branch=master" alt="Build Status" class="img-responsive"></a></p>
+<p>Angular directive for echarts (version &gt;= 3.x) (The project is renamed from <strong>angular2-echarts</strong>)</p>
+<ul>
+<li><a href="https://xieziyu.github.io/ngx-echarts">Online Demo</a></li>
+<li><a href="https://xieziyu.github.io/ngx-echarts/api-doc">Online Docs</a></li>
+<li><a href="https://github.com/xieziyu/ngx-echarts-starter">Starter Project</a></li>
+</ul>
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#latest-update">Latest Update</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#events">Events</a></li>
+<li><a href="#demo">Demo</a></li>
+</ol>
+<h1 id="getting-started">Getting Started</h1>
+<p><code>ngx-echarts</code> is an Angular (ver &gt;= 2.x) directive for ECharts (ver &gt;= 3.x).</p>
+<p>Latest version @npm:
++ <code>v4.1.0</code> for Angular &gt;= 6
++ <code>v2.3.1</code> for Angular &lt; 6 (Please refer to https://github.com/xieziyu/ngx-echarts/blob/v2.x/README.md)</p>
+<p>A starter project on Github: https://github.com/xieziyu/ngx-echarts-starter</p>
+<h1 id="latest-update">Latest Update</h1>
+<ul>
+<li><p>2018.12.16: v4.1.0</p>
+<ul>
+<li>Perfomance update: echarts events are now lazily bounded, so it won&#39;t trigger change dectection unexpectedly. Please refer to <a href="https://github.com/xieziyu/ngx-echarts/pull/154">PR #154</a> for more details. Thanks to <a href="https://github.com/smnbbrv">smnbbrv</a>!</li>
+<li><code>[detectEventChanges]</code> is now deprecated.</li>
+<li>Plenty of echarts event are now <a href="#events">supported</a>.</li>
+</ul>
+</li>
+<li><p>2018.11.11: v4.0.1</p>
+<ul>
+<li>Add map events support: (chartMapSelectChanged), (chartMapSelected), (chartMapUnselected). (by <a href="https://github.com/amirch1">amirch1</a> - <a href="https://github.com/xieziyu/ngx-echarts/pull/147">PR #147</a>)</li>
+</ul>
+</li>
+<li><p>2018.08.20: v4.0.0</p>
+<ul>
+<li>Change: ECharts instance creating is delayed until view initialized.</li>
+<li>New: [detectEventChanges] Use it to avoid unwanted change detections.<ul>
+<li>If you set it false, <code>chartClick</code> and some other event-emitters become silent. <a href="https://xieziyu.github.io/ngx-echarts/#/usage/events">demo</a></li>
+</ul>
+</li>
+<li>Change: [theme] now detect changes at runtime. <ul>
+<li>When you change theme at runtime, the chart would be destroyed first and then initialized again. <a href="https://xieziyu.github.io/ngx-echarts/#/usage/theme">demo</a></li>
+</ul>
+</li>
+<li><strong>BREAKING CHANGES</strong>:<ul>
+<li>ES6 import instead of polluting global namespace. <a href="https://github.com/xieziyu/ngx-echarts/issues/123">issue #123</a></li>
+<li>NgxEchartsService is now obsoleted. If you want to use echarts API, please just import it
+<code>typescript
+import * as echarts from &#39;echarts&#39;;
+/** or */
+import { graphic, registerMap } from &#39;echarts&#39;;</code></li>
+<li>Import echarts theme files or other extension files in <code>main.ts</code>. Refer to <a href="#echarts-extensions">ECharts Extensions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2018.07.24: v3.2.0 &amp; v2.3.1:</p>
+<ul>
+<li>New: [autoResize] now detects its container element&#39;s offset height.</li>
+<li>Change: Resizing detection is now debounced.</li>
+</ul>
+</li>
+<li><p>2018.06.13: v3.1.0 &amp; v2.2.0:</p>
+<ul>
+<li>New: [autoResize] now detects its container element&#39;s offset width. Especially useful for charts inside <code>&lt;ng-template&gt;</code> such as NG-ZORRO components.</li>
+</ul>
+</li>
+<li><p>2018.06.12: v3.0.1 &amp; v2.1.1:</p>
+<ul>
+<li>Bugfix: Line chart is not animated on init. <a href="https://github.com/xieziyu/ngx-echarts/issues/102">issue#102</a></li>
+</ul>
+</li>
+<li><p>2018.05.08: v3.0.0:</p>
+<ul>
+<li>Change: Support Angular 6</li>
+<li>Docs: generate demo app by @angular/cli-6.0.0</li>
+</ul>
+</li>
+<li><p>2018.03.14: v2.1.0</p>
+<ul>
+<li>New: <code>[loadingOpts]</code> to customize loading style. Refer to <a href="#api">API</a></li>
+<li>Bugfix: double check <code>dom.style.height</code> before setting default value.</li>
+</ul>
+</li>
+<li><p>2018.02.07: v2.0.2. New: <code>[autoResize]</code> input (default: true). <a href="https://github.com/xieziyu/ngx-echarts/pull/73">PR #73</a> by <a href="https://github.com/arethore-actility">arethore-actility</a></p>
+</li>
+<li><p>2017.12.11: v2.0.1. Fix issue: No change detection involved in event handler. Refer to issue <a href="https://github.com/xieziyu/ngx-echarts/issues/26">#26</a>, <a href="https://github.com/xieziyu/ngx-echarts/issues/28">#28</a></p>
+</li>
+<li><p>2017.12.04: v2.0.0. Provide an echarts wrapper service: NgxEchartsService.</p>
+</li>
+<li><p>2017.11.25: v2.0.0-beta.0. It has some <a href="https://github.com/xieziyu/ngx-echarts/blob/master/src/assets/CHANGELOG.md">BREAKING CHANGES</a> you should know.</p>
+</li>
+</ul>
+<h1 id="installation">Installation</h1>
+<ul>
+<li><p>Since v4.0
+```bash</p>
+<h1 id="if-you-use-npm">if you use npm</h1>
+<p>npm install echarts -S
+npm install ngx-echarts -S
+npm install @types/echarts -D</p>
+<h1 id="or-if-you-use-yarn">or if you use yarn</h1>
+<p>yarn add echarts
+yarn add ngx-echarts
+yarn add @types/echarts -D
+```</p>
+</li>
+<li><p>If you need ECharts GL support, please install it first:
+```bash
+npm install echarts-gl -S</p>
+<h1 id="or">or</h1>
+<p>yarn add echarts-gl
+```</p>
+</li>
+<li><p>Import other extentions such as themes or <code>echarts-gl</code> in your <code>main.ts</code>: <a href="#echarts-extensions">ECharts Extensions</a></p>
+</li>
+</ul>
+<h2 id="upgrade-from-v3x">Upgrade from v3.x</h2>
+<ol>
+<li>Install <code>@types/echarts</code></li>
+<li>Import necessary theme or extension files in <code>main.ts</code>. Refer to <a href="#echarts-extensions">ECharts Extensions</a>.</li>
+<li>Remove <code>echarts</code> related scripts in <code>angular.json</code>.</li>
+</ol>
+<h1 id="usage">Usage</h1>
+<p>Please refer to the <a href="https://xieziyu.github.io/ngx-echarts">demo</a> page.</p>
+<ol>
+<li><p>Firstly, import <code>NgxEchartsModule</code> in your app module (or any other proper angular module):
+ ```typescript
+ import { NgxEchartsModule } from &#39;ngx-echarts&#39;;</p>
+<p> @NgModule({
+   imports: [</p>
+<div><pre class="line-numbers"><code class="language-none"> ...,
+ NgxEchartsModule</code></pre></div><p>   ],
+   ...
+ })
+ export class AppModule { }
+ ```</p>
+</li>
+<li><p>Then: use <code>echarts</code> directive in a div which has <strong>pre-defined height</strong>. (From v2.0, it has default height: 400px)</p>
+<ul>
+<li><p>Simple example:</p>
+<ul>
+<li><p>html:
+```html</p>
+<div echarts [options]="chartOption" class="demo-chart"></div>
+```
+</li>
+<li><p>scss:
+<code>css
+.demo-chart {
+height: 400px;
+}</code></p>
+</li>
+<li><p>component:
+```typescript
+import { EChartOption } from &#39;echarts&#39;;</p>
+</li>
+</ul>
+<p>// ...</p>
+<p>chartOption: EChartOption = {
+  xAxis: {</p>
+<div><pre class="line-numbers"><code class="language-none">type: &#39;category&#39;,
+data: [&#39;Mon&#39;, &#39;Tue&#39;, &#39;Wed&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;, &#39;Sun&#39;]</code></pre></div><p>  },
+  yAxis: {</p>
+<div><pre class="line-numbers"><code class="language-none">type: &#39;value&#39;</code></pre></div><p>  },
+  series: [{</p>
+<div><pre class="line-numbers"><code class="language-none">data: [820, 932, 901, 934, 1290, 1330, 1320],
+type: &#39;line&#39;</code></pre></div><p>  }]
+}
+```</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="api">API</h1>
+<h3 id="directive">Directive</h3>
+<p><code>echarts</code> directive support following input porperties:</p>
+<p>| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| <code>[options]</code> | object | null | It&#39;s the same with the options in official demo site. |
+| <code>[merge]</code> | object | null | You can use it to update part of the <code>options</code>, especially helpful when you need to update the chart data. In fact, the value of <code>merge</code> will be used in <code>echartsInstance.setOption()</code> with <code>notMerge = false</code>. So you can refer to <a href="https://ecomfe.github.io/echarts-doc/public/en/api.html#echartsInstance.setOption">ECharts documentation</a> for details |
+| <code>[loading]</code> | boolean | false | Use it to toggle the echarts loading animation when your data is not ready. |
+| <code>[autoResize]</code> | boolean | true | Charts will be automatically resized when container&#39;s width changed. |
+| <code>[initOpts]</code> | object | null | The value of <code>[initOpts]</code> will be used in <code>echarts.init()</code>. It may contain <code>devicePixelRatio</code>, <code>renderer</code>, <code>width</code> or <code>height</code> properties. Refer to <a href="https://ecomfe.github.io/echarts-doc/public/en/api.html#echarts.init">ECharts documentation</a> for details |
+| <code>[theme]</code> | string | null | Use it to init echarts with theme. You need to import the theme file in <code>main.ts</code>. |
+| <code>[loadingOpts]</code> | object | null | Input an object to customize loading style. Refer to <a href="https://ecomfe.github.io/echarts-doc/public/en/api.html#echartsInstance.showLoading">ECharts documentation</a> for details. |
+| <code>[detectEventChanges]</code> | boolean | true | Whether to register mouse event handlers on echartInstance. Use it to avoid unwanted change detections. |</p>
+<p>By default, <code>loadingOpts</code> is:</p>
+<p><code>javascript
+{
+  text: &#39;loading&#39;,
+  color: &#39;#c23531&#39;,
+  textColor: &#39;#000&#39;,
+  maskColor: &#39;rgba(255, 255, 255, 0.8)&#39;,
+  zlevel: 0
+}</code></p>
+<h3 id="echarts-api">ECharts API</h3>
+<p>If you need echarts API such as <code>echarts.graphic</code>, please import it from echarts. For example:</p>
+<p>```typescript
+/** import all */
+import * as echarts from &#39;echarts&#39;;</p>
+<p>new echarts.graphic.LinearGradient(/** ... */);</p>
+<p>/** or you can */
+import { graphic } from &#39;echarts&#39;;</p>
+<p>new graphic.LinearGradient(/** ... */);
+```</p>
+<h3 id="echarts-instance">ECharts Instance</h3>
+<p><code>echartsInstance</code> is exposed (since v1.1.6) in <code>(chartInit)</code> event. So you can directly call the APIs just like: <code>resize()</code>, <code>showLoading()</code>, etc. For example:</p>
+<ul>
+<li>html:</li>
+</ul>
+<p>```html</p>
+<div echarts class="demo-chart" [options]="chartOptions" (chartInit)="onChartInit($event)"></div>
+```
+
+<ul>
+<li>component:</li>
+</ul>
+<p>```typescript
+onChartInit(ec) {
+  this.echartsIntance = ec;
+}</p>
+<p>resizeChart() {
+  if (this.echartsIntance) {
+    this.echartsIntance.resize();
+  }
+}
+```</p>
+<h3 id="echarts-extensions">ECharts Extensions</h3>
+<p>Import echarts theme files or other extension files in <code>main.ts</code>. For example:</p>
+<p>  ```typescript
+  import { enableProdMode } from &#39;@angular/core&#39;;
+  import { platformBrowserDynamic } from &#39;@angular/platform-browser-dynamic&#39;;</p>
+<p>  import { AppModule } from &#39;./app/app.module&#39;;
+  import { environment } from &#39;./environments/environment&#39;;</p>
+<p>  /** echarts extensions: */
+  import &#39;echarts-gl&#39;;
+  import &#39;echarts/theme/macarons.js&#39;;
+  import &#39;echarts/dist/extension/bmap.min.js&#39;;</p>
+<p>  if (environment.production) {
+    enableProdMode();
+  }</p>
+<p>  platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err =&gt; console.log(err));
+  ```</p>
+<h3 id="service">Service</h3>
+<p><code>NgxEchartsService</code> has been obsoleted since v4.0</p>
+<h1 id="events">Events</h1>
+<p>As echarts support the <code>&#39;click&#39;</code>, <code>&#39;dblclick&#39;</code>, <code>&#39;mousedown&#39;</code>, <code>&#39;mouseup&#39;</code>, <code>&#39;mouseover&#39;</code>, <code>&#39;mouseout&#39;</code>, <code>&#39;globalout&#39;</code> mouse events, our <code>ngx-echarts</code> directive also support the same mouse events but with additional <code>chart</code> prefix.</p>
+<ul>
+<li><p>html:</p>
+<p>```html</p>
+<div echarts class="demo-chart" [options]="chartOptions" (chartClick)="onChartClick($event)"></div>
+```
+</li>
+<li><p>The &#39;$event&#39; is same with the &#39;params&#39; that Echarts dispatches</p>
+</li>
+</ul>
+<p>It supports following event outputs:</p>
+<p>| @Output | Event |
+| ------- | ----- |
+| chartInit | Emitted when chart is intialized |
+| chartClick | echarts event: <code>&#39;click&#39;</code> |
+| chartDblClick | echarts event: <code>&#39;dblclick&#39;</code> |
+| chartMouseDown | echarts event: <code>&#39;mousedown&#39;</code> |
+| chartMouseMove | echarts event: <code>&#39;mousemove&#39;</code> |
+| chartMouseUp | echarts event: <code>&#39;mouseup&#39;</code> |
+| chartMouseOver | echarts event: <code>&#39;mouseover&#39;</code> |
+| chartMouseOut | echarts event: <code>&#39;mouseout&#39;</code> |
+| chartGlobalOut | echarts event: <code>&#39;globalout&#39;</code> |
+| chartContextMenu | echarts event: <code>&#39;contextmenu&#39;</code> |
+| chartLegendSelectChanged | echarts event: <code>&#39;legendselectchanged&#39;</code> |
+| chartLegendSelected | echarts event: <code>&#39;legendselected&#39;</code> |
+| chartLegendUnselected | echarts event: <code>&#39;legendunselected&#39;</code> |
+| chartLegendScroll | echarts event: <code>&#39;legendscroll&#39;</code> |
+| chartDataZoom | echarts event: <code>&#39;datazoom&#39;</code> |
+| chartDataRangeSelected | echarts event: <code>&#39;datarangeselected&#39;</code> |
+| chartTimelineChanged | echarts event: <code>&#39;timelinechanged&#39;</code> |
+| chartTimelinePlayChanged | echarts event: <code>&#39;timelineplaychanged&#39;</code> |
+| chartRestore | echarts event: <code>&#39;restore&#39;</code> |
+| chartDataViewChanged | echarts event: <code>&#39;dataviewchanged&#39;</code> |
+| chartMagicTypeChanged | echarts event: <code>&#39;magictypechanged&#39;</code> |
+| chartPieSelectChanged | echarts event: <code>&#39;pieselectchanged&#39;</code> |
+| chartPieSelected | echarts event: <code>&#39;pieselected&#39;</code> |
+| chartPieUnselected | echarts event: <code>&#39;pieunselected&#39;</code> |
+| chartMapSelectChanged | echarts event: <code>&#39;mapselectchanged&#39;</code> |
+| chartMapSelected | echarts event: <code>&#39;mapselected&#39;</code> |
+| chartMapUnselected | echarts event: <code>&#39;mapunselected&#39;</code> |
+| chartAxisAreaSelected | echarts event: <code>&#39;axisareaselected&#39;</code> |
+| chartFocusNodeAdjacency | echarts event: <code>&#39;focusnodeadjacency&#39;</code> |
+| chartUnfocusNodeAdjacency | echarts event: <code>&#39;unfocusnodeadjacency&#39;</code> |
+| chartBrush | echarts event: <code>&#39;brush&#39;</code> |
+| chartBrushSelected | echarts event: <code>&#39;brushselected&#39;</code> |
+| chartRendered | echarts event: <code>&#39;rendered&#39;</code> |
+| chartFinished | echarts event: <code>&#39;finished&#39;</code> |</p>
+<p>You can refer to the echarts tutorial: <a href="https://ecomfe.github.io/echarts-doc/public/en/tutorial.html#Events%20and%20Actions%20in%20ECharts">Events and Actions in ECharts</a> for more details of the event params. You can also refer to the <a href="https://xieziyu.github.io/#/ngx-echarts/demo">demo</a> page for the detailed example.</p>
+<h1 id="demo">Demo</h1>
+<p>You can clone this repo to your working copy and then launch the demo page in your local machine:
+```bash
+npm install
+npm run demo</p>
+<h1 id="or-1">or</h1>
+<p>yarn install
+yarn demo
+```
+The demo page server is listening to: http://localhost:4202</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
