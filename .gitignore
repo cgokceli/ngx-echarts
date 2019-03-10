@@ -2,7 +2,6 @@
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 
 # compiled output
-/dist
 /tmp
 /out-tsc
 
@@ -41,3 +40,4 @@ documentation
 #System Files
 .DS_Store
 Thumbs.db
+/.vs
